@@ -10,6 +10,7 @@ class Open(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
         if (message.author.bot
+                or message.channel.category == None
                 or message.channel.category.id != const.CAT_THREAD):
             return
 
@@ -31,7 +32,7 @@ class Open(commands.Cog):
             text = "has already opened."
         elif response.category.id == const.CAT_ARCHIVE:
             text = "has reopened from archives."
-            await response.edit(topic="thread-author: " + str(message.author.id))
+            await response.edit(topic=f"thread-author: {message.author.id}")
             await response.edit(category=cat_thread)
         await message.channel.send(f"{message.author.mention} {response.mention} {text}")
 

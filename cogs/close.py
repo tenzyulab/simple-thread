@@ -11,7 +11,9 @@ class Close(commands.Cog):
         if ctx.author.bot:
             return
 
-        if ctx.channel.category.id != const.CAT_THREAD:
+        if (ctx.channel.category == None
+                or ctx.channel.category.id != const.CAT_THREAD):
+            return
             await ctx.send("You cannot that command use here.")
             return
         elif ctx.channel.topic != f"thread-author: {ctx.author.id}":
