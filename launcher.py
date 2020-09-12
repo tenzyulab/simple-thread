@@ -7,7 +7,7 @@ from discord.ext import commands
 load_dotenv()
 
 
-class Wikipedian(commands.Bot):
+class MyBot(commands.Bot):
     def __init__(self, **options):
         super().__init__(command_prefix=commands.when_mentioned_or("/"), **options)
         print("Starting Simple Thread...")
@@ -19,6 +19,10 @@ class Wikipedian(commands.Bot):
             except BaseException:
                 print_exc()
 
+    async def on_ready(self):
+        user = self.user
+        print("logged in:", str(user), user.id)
+
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.CommandNotFound):
             return
@@ -28,11 +32,7 @@ class Wikipedian(commands.Bot):
             return
         await ctx.send(error)
 
-    async def on_ready(self):
-        user = self.user
-        print("logged in:", str(user), user.id)
-
 
 if __name__ == '__main__':
-    bot = Wikipedian()
+    bot = MyBot()
     bot.run(getenv("DISCORD_BOT_TOKEN"))
