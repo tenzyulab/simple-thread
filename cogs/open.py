@@ -9,7 +9,8 @@ class Open(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if message.author.bot or (message.channel.category.id != const.CAT_THREAD):
+        if (message.author.bot
+                or message.channel.category.id != const.CAT_THREAD):
             return
 
         if message.channel.id != const.CH_MASTER:
@@ -19,9 +20,7 @@ class Open(commands.Cog):
 
         name = message.content
         cat_thread = self.bot.get_channel(const.CAT_THREAD)
-
         response = discord.utils.get(message.guild.channels, name=name)
-
         if not response:
             new_thread = await cat_thread.create_text_channel(name=name)
             await new_thread.edit(topic=f"thread-author: {message.author.id}")
