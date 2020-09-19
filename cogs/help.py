@@ -13,25 +13,19 @@ class Help(commands.Cog, command_attrs=dict(hidden=True)):
             **Simple Thread** allows you to add threaded features to your guild.
 
             > `/set <ThreadMasterChannel> <ThreadCategory> <ArchiveCategory>`
-            Setup the Thread to your server.
+            Sets the Thread to your server.
 
             > `/remove <ThreadMasterChannel>`
-            Remove a Thread containing the `<ThreadMasterChannel>`.
+            Removes the saved Thread features with the set command.
 
-            > `Send a Thread Name to the Thread Master Channel`
-            Creates new channel as thread with the name as the message sent in the Thread Category.
+            > `<ThreadName>`
+            When you send it to `<ThreadMasterChannel>`, Simple Thread creates a new channel named `<ThreadName>` in `<ThreadCategory>`.
 
             > `/rename <name>`
-            If your channel, rename to the `<name>`.
-            Note: Due to a limitation on the discord side, the same channel name is updated only twice every 10 minutes.
+            Renames the channel to `<ThreadName>` only if sent to your channel by you.
 
             > `/close`
-            If your channel, move to the Archive Category.
-            Tips: Patrol? If you're an administrator, you can close it indiscriminately. Let's keep the server secure!
-
-            > `Sorted by Unread Order`
-            Threads below the Thread Master Channel are automatically sorted in unread order.
-            Don't mind about which channel is being updated, take a peek at it from above!
+            Archives the channel to `<ArchiveCategory>` only if sent to your channel by you.
 
             See also GitHub for more information:
             https://github.com/tenzyu/simple-thread
