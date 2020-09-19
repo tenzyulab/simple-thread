@@ -172,6 +172,37 @@ class Thread(commands.Cog):
         await message.channel.send(f"{message.author.mention} {thread.mention} {text}")
 
     @commands.command()
+    async def reopen(self, ctx):
+        if ctx.author.bot:
+            return
+
+        channel = ctx.channel
+
+        # If the channel doesn't have a category, it is not Thread.
+        if not channel.category:
+            await ctx.send("You cannot use reopen command here.")
+            return
+
+        # If in the Thread, bring the CategoryIDs.
+        cat_archive_id = None
+        cat_thread_id = None
+        for dict_key in self.threads.keys():
+            if channel.category.id == self.threads[str(dict_key)]["cat_archive"]:
+                cat_archive_id = self.threads[str(dict_key)]["cat_archive"]
+                cat_thread_id = self.threads[str(dict_key)]["cat_thread"]
+                break
+
+        if channel.category.id != cat_archive_id:
+            await ctx.send("You cannot use reopen command here.")
+            return
+
+        cat_thread = self.bot.get_channel(cat_thread_id)
+        await channel.edit(topic=f"thread-author: {ctx.author.id}")
+        await channel.edit(category=cat_thread)
+        await channel.edit(sync_permissions=True)
+        await ctx.send(f"{ctx.author.mention} {channel.mention} is reopened from the archives.")
+
+    @commands.command()
     async def rename(self, ctx, *, name):
         if ctx.author.bot:
             return

@@ -21,6 +21,9 @@ class Help(commands.Cog, command_attrs=dict(hidden=True)):
             > `<ThreadName>`
             When you send it to `<ThreadMasterChannel>`, Simple Thread creates a new channel named `<ThreadName>` in `<ThreadCategory>`.
 
+            > `/close`
+            When you send it to closed channel in `<ArchiveCategory>`, it is reopened.
+            
             > `/rename <name>`
             Renames the channel to `<ThreadName>` only if sent to your channel by you.
 

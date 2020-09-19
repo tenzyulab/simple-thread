@@ -26,6 +26,14 @@ Channels and categories will not be deleted.
 
 When you send it to `<ThreadMasterChannel>`, Simple Thread creates a new channel named `<ThreadName>` in `<ThreadCategory>`.
 
+Tips: If `<ArchiveCategory>` has a channel named `<ThreadName>`, it is reopened.
+
+### `/reopen`
+
+When you send it to closed channel in `<ArchiveCategory>`, it is reopened.
+
+Tips: If your server is making the archive category unwritable, please refer to the Tips in `<ThreadName>`.
+
 ### `/rename <ThreadName>`
 
 Renames the channel to `<ThreadName>` only if sent to your channel by you.
