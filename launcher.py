@@ -22,7 +22,7 @@ class MyBot(commands.Bot):
 
     async def on_ready(self):
         user = self.user
-        print("logged in:", str(user), user.id)
+        print("logged in as:", str(user), user.id)
 
     async def on_command_error(self, ctx, error):
         ignore_errors = (commands.CommandNotFound, commands.CheckFailure)
