@@ -116,6 +116,29 @@ class Thread(commands.Cog):
 
         self.threads.pop(ch_master)
         await ctx.send("Removed!")
+    
+    # From here, the process of sorting by unread order and opening the thread.
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        if message.author.bot:
+            return
 
+        channel = message.channel
+
+        if not channel.category:
+            return
+
+        # Move the thread down one of the ThreadMasterChannel.
+        dict_key = str(channel.id)
+        if not dict_key in self.threads:
+            for dict_key in self.threads.keys():
+                if channel.category.id != self.threads[str(dict_key)]["cat_thread"]:
+                    continue
+                position = self.bot.get_channel(int(dict_key)).position
+                if channel.position < position:
+                    return
+                await channel.edit(position=position + 1)
+                return
+            return
 def setup(bot):
     bot.add_cog(Thread(bot))
