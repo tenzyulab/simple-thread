@@ -80,6 +80,42 @@ class Thread(commands.Cog):
         self.threads[ch_master]["cat_archive"] = cat_archive
         await ctx.send("Registered!")
 
+    """
+    This is the remove command.
+    the Server Admins send '/set <ThreadMasterChannel>'
+    Nothing problem, pop this Thread of threads.json
+    
+    ch_master as ThreadMasterChannel
+
+    For example: /remove 702030388033224714
+    This Thread of the json file will be popped.
+    """
+    @commands.command(aliases=["rem"])
+    @commands.has_guild_permissions(administrator=True)
+    async def remove(self, ctx, ch_master: discord.TextChannel = None):
+        if ctx.author.bot:
+            return
+
+        if not ch_master:
+            embed = discord.Embed(
+                title="Tips",
+                description=dedent("""\
+                Please send the ID of the Thread Master; you wanna remove Thread.
+                Like this `/remove 702030388033224714`"""),
+                url="https://github.com/tenzyu/simple-thread"
+            )
+            embed.set_footer(
+                text="If you tap the title, jump to the details.")
+            await ctx.send(embed=embed)
+            return
+
+        ch_master = str(ch_master.id)
+        if not ch_master in self.threads:
+            await ctx.send("That Thread Master Channel isn't registered.")
+            return
+
+        self.threads.pop(ch_master)
+        await ctx.send("Removed!")
 
 def setup(bot):
     bot.add_cog(Thread(bot))
