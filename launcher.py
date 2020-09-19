@@ -1,8 +1,9 @@
-from os import getenv
 from glob import glob
-from dotenv import load_dotenv
+from os import getenv
 from traceback import print_exc
+
 from discord.ext import commands
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -11,6 +12,7 @@ class MyBot(commands.Bot):
     def __init__(self, **options):
         super().__init__(command_prefix=commands.when_mentioned_or("/"), **options)
         print("Starting Simple Thread...")
+        self.remove_command("help")
 
         for cog in [cog.replace("/", ".").replace(".py", "") for cog in glob("cogs/*.py")]:
             try:
@@ -21,14 +23,11 @@ class MyBot(commands.Bot):
 
     async def on_ready(self):
         user = self.user
-        print("logged in:", str(user), user.id)
+        print("logged in as:", str(user), user.id)
 
     async def on_command_error(self, ctx, error):
-        if isinstance(error, commands.CommandNotFound):
-            return
-        if isinstance(error, commands.BadArgument):
-            return
-        if isinstance(error, commands.CheckFailure):
+        ignore_errors = (commands.CommandNotFound, commands.CheckFailure)
+        if isinstance(error, ignore_errors):
             return
         await ctx.send(error)
 
