@@ -116,7 +116,7 @@ class Thread(commands.Cog):
 
         self.threads.pop(ch_master)
         await ctx.send("Removed!")
-    
+
     # From here, the process of sorting by unread order and opening the thread.
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -199,6 +199,42 @@ class Thread(commands.Cog):
         # Rename Process
         await channel.edit(name=name)
         await ctx.send(f"{ctx.author.mention} renamed `{name}`")
+
+    @commands.command()
+    async def close(self, ctx):
+        if ctx.author.bot:
+            return
+
+        channel = ctx.channel
+
+        # if not Thread or Thread Master, don't allow use it.
+        if (not channel.category) or (str(channel.id) in self.threads):
+            await ctx.send("You cannot use close command here.")
+            return
+
+        # If in the Thread, bring some data.
+        cat_thread_id = None
+        for dict_key in self.threads.keys():
+            if channel.category.id == self.threads[str(dict_key)]["cat_thread"]:
+                cat_thread_id = self.threads[str(dict_key)]["cat_thread"]
+                cat_archive_id = self.threads[str(dict_key)]["cat_archive"]
+                break
+
+        # Check can use close command
+        if not cat_thread_id:
+            await ctx.send("You cannot use close command here.")
+            return
+        elif not (channel.topic == f"thread-author: {ctx.author.id}"
+                  or ctx.author.guild_permissions.administrator):
+            await ctx.send("You don't have permission to use close command.")
+            return
+
+        # Close Process
+        cat_archive = self.bot.get_channel(cat_archive_id)
+        await channel.edit(category=cat_archive)
+        await channel.edit(sync_permissions=True)
+        await ctx.send("This thread was closed.")
+
 
 def setup(bot):
     bot.add_cog(Thread(bot))
