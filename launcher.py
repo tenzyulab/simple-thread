@@ -1,8 +1,9 @@
-from os import getenv
 from glob import glob
-from dotenv import load_dotenv
+from os import getenv
 from traceback import print_exc
+
 from discord.ext import commands
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -24,11 +25,8 @@ class MyBot(commands.Bot):
         print("logged in:", str(user), user.id)
 
     async def on_command_error(self, ctx, error):
-        if isinstance(error, commands.CommandNotFound):
-            return
-        if isinstance(error, commands.BadArgument):
-            return
-        if isinstance(error, commands.CheckFailure):
+        ignore_errors = (commands.CommandNotFound, commands.CheckFailure)
+        if isinstance(error, ignore_errors):
             return
         await ctx.send(error)
 
