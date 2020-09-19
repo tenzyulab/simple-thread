@@ -12,6 +12,7 @@ class MyBot(commands.Bot):
     def __init__(self, **options):
         super().__init__(command_prefix=commands.when_mentioned_or("/"), **options)
         print("Starting Simple Thread...")
+        self.remove_command("help")
 
         for cog in [cog.replace("/", ".").replace(".py", "") for cog in glob("cogs/*.py")]:
             try:
