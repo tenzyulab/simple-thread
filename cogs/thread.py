@@ -168,5 +168,37 @@ class Thread(commands.Cog):
             await thread.edit(sync_permissions=True)
         await message.channel.send(f"{message.author.mention} {thread.mention} {text}")
 
+    @commands.command()
+    async def rename(self, ctx, *, name):
+        if ctx.author.bot:
+            return
+
+        channel = ctx.channel
+
+        # If the channel doesn't have a category, it is not Thread.
+        if not channel.category:
+            await ctx.send("You cannot use rename command here.")
+            return
+
+        # If in the Thread, bring the ThreadCategoryID.
+        cat_thread_id = None
+        for dict_key in self.threads.keys():
+            if channel.category.id == self.threads[str(dict_key)]["cat_thread"]:
+                cat_thread_id = self.threads[str(dict_key)]["cat_thread"]
+                break
+
+        # Check can use rename command.
+        if not cat_thread_id:
+            await ctx.send("You cannot use rename command here.")
+            return
+        elif not (channel.topic == f"thread-author: {ctx.author.id}"
+                  or ctx.author.guild_permissions.administrator):
+            await ctx.send("You don't have permission to use rename command.")
+            return
+
+        # Rename Process
+        await channel.edit(name=name)
+        await ctx.send(f"{ctx.author.mention} renamed `{name}`")
+
 def setup(bot):
     bot.add_cog(Thread(bot))
