@@ -134,10 +134,10 @@ class Thread(commands.Cog):
             for dict_key in self.threads.keys():
                 if channel.category.id != self.threads[str(dict_key)]["cat_thread"]:
                     continue
-                position = self.bot.get_channel(int(dict_key)).position
-                if channel.position < position:
+                position = self.bot.get_channel(int(dict_key)).position + 1
+                if channel.position <= position:
                     return
-                await channel.edit(position=position + 1)
+                await channel.edit(position=position)
                 return
             return
 
