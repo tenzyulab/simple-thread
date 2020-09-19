@@ -140,5 +140,33 @@ class Thread(commands.Cog):
                 await channel.edit(position=position + 1)
                 return
             return
+
+        # Bring some data
+        thread_data = self.threads[dict_key]
+        ch_master = int(dict_key)
+        cat_thread_id = thread_data["cat_thread"]
+        cat_archive_id = thread_data["cat_archive"]
+
+        # If nothing the same name thread, create new thread.
+        cat_thread = self.bot.get_channel(cat_thread_id)
+        name = message.content.replace(" ", "-").lower()
+        thread = discord.utils.get(message.guild.channels, name=name)
+        if not thread:
+            new_thread = await cat_thread.create_text_channel(name=name)
+            await new_thread.edit(topic=f"thread-author: {message.author.id}")
+            await new_thread.edit(sync_permissions=True)
+            await channel.send(f"{message.author.mention} {new_thread.mention} opened.")
+            return
+
+        # If matched the same name thread, show it.
+        if thread.category.id == cat_thread_id:
+            text = "is already open."
+        elif thread.category.id == cat_archive_id:
+            text = "is reopened from the archives."
+            await thread.edit(topic=f"thread-author: {message.author.id}")
+            await thread.edit(category=cat_thread)
+            await thread.edit(sync_permissions=True)
+        await message.channel.send(f"{message.author.mention} {thread.mention} {text}")
+
 def setup(bot):
     bot.add_cog(Thread(bot))
