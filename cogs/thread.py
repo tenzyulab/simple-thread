@@ -159,9 +159,12 @@ class Thread(commands.Cog):
             return
 
         # If matched the same name thread, show it.
-        if thread.category.id == cat_thread_id:
+        thread = discord.utils.get(cat_thread.channels, name=name)
+        if thread:
             text = "is already open."
-        elif thread.category.id == cat_archive_id:
+        cat_archive = self.bot.get_channel(cat_archive_id)
+        thread = discord.utils.get(cat_archive.channels, name=name)
+        if thread:
             text = "is reopened from the archives."
             await thread.edit(topic=f"thread-author: {message.author.id}")
             await thread.edit(category=cat_thread)
