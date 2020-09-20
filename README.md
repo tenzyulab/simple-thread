@@ -1,6 +1,6 @@
 # Simple Thread
 
-![eyecatch](https://cdn.discordapp.com/attachments/752286472383758416/756862024499200051/image0.jpg)
+![eyecatch](https://cdn.discordapp.com/attachments/752286472383758416/757082322205016154/image0.jpg)
 
 > Simple Thread is a Discord Bot that allows you to implement thread features in a better way.
 
