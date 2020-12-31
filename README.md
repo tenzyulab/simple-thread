@@ -81,3 +81,17 @@ We're looking for a solution to this problem of asking for too strong permission
 ### HiraginoYuki - https://github.com/hiraginoyuki
 
 He is also Japanese, but he worked with me from the development stage to come up with English expression.
+
+<hr />
+
+**解決しない or 新しい問題** があれば **Issue** を立てるか、**[Twitter](https://twitter.com/tenzyumasuda)** にダイレクトメッセージを送ってください。気軽にどうぞ！
+
+<br />
+
+<br />
+
+<p align="center">©️ 2020 Tenzyu Masuda</p>
+
+<br />
+
+<br />
