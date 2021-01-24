@@ -2,85 +2,68 @@
 
 ![eyecatch](https://cdn.discordapp.com/attachments/752286472383758416/758455916986761256/image0.jpg)
 
-> Simple Thread is a Discord Bot that allows you to implement thread features in a better way.
+> Simple Thread は Discord サーバーにスレッド機能を追加する bot です。
 
-### **[✉️ Invite to your server](https://discord.com/api/oauth2/authorize?client_id=754309543160184893&permissions=8&scope=bot)**
+### **[✉️ Click To Invite !](https://discord.com/api/oauth2/authorize?client_id=754309543160184893&permissions=8&scope=bot)**
 
-## Usage
+## 使い方
 
 ### `/set <ThreadMasterChannel> <ThreadCategory> <ArchiveCategory>`
 
-Sets the Thread to your server.
+スレッドを設定します。
 
-If you don't duplicate IDs, you can add as many threads as you like.
+IDが重複していなければ、いくらでもスレッドを追加できます。
 
-Please pass these arguments by ID. You can also use a name, but the ID is more reliable.
+これらの引数はIDで渡してください。名前でも構いませんが、IDの方が確実です。
 
 ### `/remove <ThreadMasterChannel>`
 
-Removes the saved Thread features with the set command.
+setコマンドで保存されているスレッド機能を削除します。
 
-Channels and categories will not be deleted.
+チャンネルやカテゴリは削除されません。
 
 ### `<ThreadName>`
 
-When you send it to `<ThreadMasterChannel>`, Simple Thread creates a new channel named `<ThreadName>` in `<ThreadCategory>`.
+これを `<ThreadMasterChannel>` に送ると、Simple Thread が `<ThreadCategory>` の中に `<ThreadName>` という名前のチャンネルを作成します。
 
-Tips: If `<ArchiveCategory>` has a channel named `<ThreadName>`, it is reopened.
+Tips: `<ArchiveCategory>` に `<ThreadName>` という名前のチャンネルがある場合は、そのチャンネルをアーカイブから戻します。
 
 ### `/reopen`
 
-When you send it to closed channel in `<ArchiveCategory>`, it is reopened.
+`<ArchiveCategory>` のチャンネルに送るとスレッドに戻されます。
 
-Tips: If your server is making the archive category unwritable, please refer to the Tips in `<ThreadName>`.
+サーバがアーカイブカテゴリを書き換え不可能にしている場合は、`<ThreadName>`のTipsを参考にしてください。
 
 ### `/rename <ThreadName>`
 
-Renames the channel to `<ThreadName>` only if sent to your channel by you.
+送信されたスレッドのチャンネル名を `<ThreadName>` に変更します。
 
-Note: Due to a limitation on the discord side, on the same channel, the channel name is only updated twice in 10 minutes.
+注意: discord 側の制限により、同じスレッドのチャンネル名は 10 分間に 2 回しか更新されません。
 
 ### `/close`
 
-Archives the channel to `<ArchiveCategory>` only if sent to your channel by you.
+スレッドを `<ArchiveCategory>` にアーカイブします。
 
-Tips: Patrol? If you're <b>an administrator</b>, you can close it <b>indiscriminately</b>. Let's keep the server secure!
+Tips: サーバーの管理者であれば、無差別に閉じることができます。
 
-### `/help`
 
-Shows the help.
+## その他
 
-## Others
+### `未読順ソート`
 
-### `Sorted by Unread Order`
+各スレッドは、新しいメッセージが送信されるとスレッドマスターのひとつ下の位置に移動します。
 
-Each thread moves to the next position of the thread master when a new message comes in.
+どのチャンネルが更新されたかは気にしないでください。上からタップするだけで最新のメッセージを確認できます。
 
-Don't care which channel is updated.
+## 必要な権限
 
-Just tap the thread from the top!
+- Administrator (管理者)
 
-## Required Permissions
+### なぜ管理者権限が必要なのか
 
-- Administrator
+申し訳ありませんが、この bot は `sync_permission()` メソッドを使用しています。
 
-### Why Requires Admin?
-
-Sorry, this bot uses the method `sync_permission()`; needed the admin to use.
-
-We're looking for a solution to this problem of asking for too strong permissions.
-
-## NOTE
-
-1. I think I wrote some hackneyed code. I want you to code reviews.
-2. I'm not native English speakers, So I'm always open to better translations from you.
-3. I've done some testing, but there are always unknown problems. I welcome your reports to the issue.
-
-## Special Thanks
-
-### HiraginoYuki - https://github.com/hiraginoyuki
-
-He is also Japanese, but he worked with me from the development stage to come up with English expression.
+あまりにも強い権限を要求するこの問題の解決策があれば教えてください。
 
 <hr />
 
