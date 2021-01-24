@@ -41,9 +41,16 @@ class Thread(commands.Cog):
         "cat_archive": 702074011772911656
     }
     """
+
     @commands.command(name="set")
     @commands.has_guild_permissions(administrator=True)
-    async def _set(self, ctx, ch_master: discord.TextChannel = None, cat_thread: discord.CategoryChannel = None, cat_archive: discord.CategoryChannel = None):
+    async def _set(
+        self,
+        ctx,
+        ch_master: discord.TextChannel = None,
+        cat_thread: discord.CategoryChannel = None,
+        cat_archive: discord.CategoryChannel = None,
+    ):
         if ctx.author.bot:
             return
 
@@ -51,13 +58,14 @@ class Thread(commands.Cog):
             embed = discord.Embed(
                 title="Tips",
                 url="https://github.com/tenzyu/simple-thread",
-                description=dedent("""\
+                description=dedent(
+                    """\
                 Please send the ID of the ThreadMasterChannel, ThreadCategory and ArchiveCategory; you wanna set to Threader.
                 Like this `/set 702030388033224714 662856289151615025 702074011772911656`
-                """)
+                """
+                ),
             )
-            embed.set_footer(
-                text="If you tap the title, jump to the details.")
+            embed.set_footer(text="If you tap the title, jump to the details.")
             await ctx.send(embed=embed)
             return
 
@@ -90,6 +98,7 @@ class Thread(commands.Cog):
     For example: /remove 702030388033224714
     This Thread of the json file will be popped.
     """
+
     @commands.command(aliases=["rem"])
     @commands.has_guild_permissions(administrator=True)
     async def remove(self, ctx, ch_master: discord.TextChannel = None):
@@ -99,13 +108,14 @@ class Thread(commands.Cog):
         if not ch_master:
             embed = discord.Embed(
                 title="Tips",
-                description=dedent("""\
+                description=dedent(
+                    """\
                 Please send the ID of the Thread Master; you wanna remove Thread.
-                Like this `/remove 702030388033224714`"""),
-                url="https://github.com/tenzyu/simple-thread"
+                Like this `/remove 702030388033224714`"""
+                ),
+                url="https://github.com/tenzyu/simple-thread",
             )
-            embed.set_footer(
-                text="If you tap the title, jump to the details.")
+            embed.set_footer(text="If you tap the title, jump to the details.")
             await ctx.send(embed=embed)
             return
 
@@ -143,7 +153,6 @@ class Thread(commands.Cog):
 
         # Bring some data
         thread_data = self.threads[dict_key]
-        ch_master = int(dict_key)
         cat_thread_id = thread_data["cat_thread"]
         cat_archive_id = thread_data["cat_archive"]
 
@@ -161,7 +170,9 @@ class Thread(commands.Cog):
         # If matched the same name thread, show it.
         thread = discord.utils.get(cat_thread.channels, name=name)
         if thread:
-            await message.channel.send(f"{message.author.mention} {thread.mention} is already open.")
+            await message.channel.send(
+                f"{message.author.mention} {thread.mention} is already open."
+            )
             return
         cat_archive = self.bot.get_channel(cat_archive_id)
         thread = discord.utils.get(cat_archive.channels, name=name)
@@ -169,7 +180,9 @@ class Thread(commands.Cog):
             await thread.edit(topic=f"thread-author: {message.author.id}")
             await thread.edit(category=cat_thread)
             await thread.edit(sync_permissions=True)
-            await message.channel.send(f"{message.author.mention} {thread.mention} is reopened from the archives.")
+            await message.channel.send(
+                f"{message.author.mention} {thread.mention} is reopened from the archives."
+            )
 
     @commands.command()
     async def reopen(self, ctx):
@@ -200,7 +213,9 @@ class Thread(commands.Cog):
         await channel.edit(topic=f"thread-author: {ctx.author.id}")
         await channel.edit(category=cat_thread)
         await channel.edit(sync_permissions=True)
-        await ctx.send(f"{ctx.author.mention} {channel.mention} is reopened from the archives.")
+        await ctx.send(
+            f"{ctx.author.mention} {channel.mention} is reopened from the archives."
+        )
 
     @commands.command()
     async def rename(self, ctx, *, name):
@@ -225,8 +240,10 @@ class Thread(commands.Cog):
         if not cat_thread_id:
             await ctx.send("You cannot use rename command here.")
             return
-        elif not (channel.topic == f"thread-author: {ctx.author.id}"
-                  or ctx.author.guild_permissions.administrator):
+        elif not (
+            channel.topic == f"thread-author: {ctx.author.id}"
+            or ctx.author.guild_permissions.administrator
+        ):
             await ctx.send("You don't have permission to use rename command.")
             return
 
@@ -258,8 +275,10 @@ class Thread(commands.Cog):
         if not cat_thread_id:
             await ctx.send("You cannot use close command here.")
             return
-        elif not (channel.topic == f"thread-author: {ctx.author.id}"
-                  or ctx.author.guild_permissions.administrator):
+        elif not (
+            channel.topic == f"thread-author: {ctx.author.id}"
+            or ctx.author.guild_permissions.administrator
+        ):
             await ctx.send("You don't have permission to use close command.")
             return
 
