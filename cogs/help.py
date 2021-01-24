@@ -27,7 +27,7 @@ class Help(commands.Cog):
             詳しい使い方は GitHub を読んでください。
             
             # GitHubはこちら
-            <https://github.com/tenzyu/simple-quote>
+            <https://github.com/tenzyu/simple-thread>
 
             # サポートサーバーはこちら
             <https://discord.gg/4nSKCE9RRn>
