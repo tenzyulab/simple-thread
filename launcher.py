@@ -11,7 +11,7 @@ load_dotenv()
 class MyBot(commands.Bot):
     def __init__(self, **options):
         super().__init__(command_prefix=commands.when_mentioned_or("/"), **options)
-        print("Starting Simple Thread...")
+        print("Simple Threadを起動します。")
         self.remove_command("help")
 
         for cog in [
@@ -19,13 +19,12 @@ class MyBot(commands.Bot):
         ]:
             try:
                 self.load_extension(cog)
-                print(f"loaded: {cog}")
+                print(f"{cog}.pyは正常にロードされました。")
             except BaseException:
                 print_exc()
 
     async def on_ready(self):
-        user = self.user
-        print("logged in as:", str(user), user.id)
+        print(self.user.name, self.user.id, "としてログインしました。")
 
     async def on_command_error(self, ctx, error):
         ignore_errors = (commands.CommandNotFound, commands.CheckFailure)

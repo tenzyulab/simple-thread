@@ -60,12 +60,12 @@ class Thread(commands.Cog):
                 url="https://github.com/tenzyu/simple-thread",
                 description=dedent(
                     """\
-                Please send the ID of the ThreadMasterChannel, ThreadCategory and ArchiveCategory; you wanna set to Threader.
-                Like this `/set 702030388033224714 662856289151615025 702074011772911656`
+                ThreadMasterChannel, ThreadCategory, ArchiveCategory のIDを送信してください。
+                例 `/set 702030388033224714 662856289151615025 702074011772911656`
                 """
                 ),
             )
-            embed.set_footer(text="If you tap the title, jump to the details.")
+            embed.set_footer(text="タイトルをタップすると GitHub のページに飛べます。")
             await ctx.send(embed=embed)
             return
 
@@ -74,19 +74,19 @@ class Thread(commands.Cog):
         cat_archive = cat_archive.id
         for dict_key in self.threads.keys():
             if ch_master == self.threads[dict_key]:
-                await ctx.send("That ThreadMasterChannel is already registered.")
+                await ctx.send("その ThreadMasterChannel は既に登録されています。")
                 return
             if cat_thread == self.threads[dict_key]["cat_thread"]:
-                await ctx.send("That ThreadCategory is already registered.")
+                await ctx.send("その ThreadCategory は既に登録されています。")
                 return
             if cat_archive == self.threads[dict_key]["cat_archive"]:
-                await ctx.send("That ArchiveCategory is already registered.")
+                await ctx.send("その ArchiveCategory は既に登録されています。")
                 return
 
         self.threads[ch_master] = {}
         self.threads[ch_master]["cat_thread"] = cat_thread
         self.threads[ch_master]["cat_archive"] = cat_archive
-        await ctx.send("Registered!")
+        await ctx.send("登録しました。")
 
     """
     This is the remove command.
@@ -110,22 +110,22 @@ class Thread(commands.Cog):
                 title="Tips",
                 description=dedent(
                     """\
-                Please send the ID of the Thread Master; you wanna remove Thread.
-                Like this `/remove 702030388033224714`"""
+                スレッドを削除したい場合は、ThreadMasterChannel のIDを送ってください。
+                例 `/remove 702030388033224714`"""
                 ),
                 url="https://github.com/tenzyu/simple-thread",
             )
-            embed.set_footer(text="If you tap the title, jump to the details.")
+            embed.set_footer(text="タイトルをタップすると GitHub のページに飛べます。")
             await ctx.send(embed=embed)
             return
 
         ch_master = str(ch_master.id)
         if not ch_master in self.threads:
-            await ctx.send("That Thread Master Channel isn't registered.")
+            await ctx.send("その ThreadMasterChannel は登録されていません。")
             return
 
         self.threads.pop(ch_master)
-        await ctx.send("Removed!")
+        await ctx.send("スレッド機能を削除しました。")
 
     # From here, the process of sorting by unread order and opening the thread.
     @commands.Cog.listener()
@@ -164,14 +164,14 @@ class Thread(commands.Cog):
             new_thread = await cat_thread.create_text_channel(name=name)
             await new_thread.edit(topic=f"thread-author: {message.author.id}")
             await new_thread.edit(sync_permissions=True)
-            await channel.send(f"{message.author.mention} {new_thread.mention} opened.")
+            await channel.send(f"{message.author.mention} {new_thread.mention} を開きました。")
             return
 
         # If matched the same name thread, show it.
         thread = discord.utils.get(cat_thread.channels, name=name)
         if thread:
             await message.channel.send(
-                f"{message.author.mention} {thread.mention} is already open."
+                f"{message.author.mention} {thread.mention} は既に開かれています。"
             )
             return
         cat_archive = self.bot.get_channel(cat_archive_id)
@@ -181,7 +181,7 @@ class Thread(commands.Cog):
             await thread.edit(category=cat_thread)
             await thread.edit(sync_permissions=True)
             await message.channel.send(
-                f"{message.author.mention} {thread.mention} is reopened from the archives."
+                f"{message.author.mention} {thread.mention} をアーカイブから戻しました。"
             )
 
     @commands.command()
@@ -193,7 +193,7 @@ class Thread(commands.Cog):
 
         # If the channel doesn't have a category, it is not Thread.
         if not channel.category:
-            await ctx.send("You cannot use reopen command here.")
+            await ctx.send("ここでは reopen コマンドを使用できません。")
             return
 
         # If in the Thread, bring the CategoryIDs.
@@ -206,7 +206,7 @@ class Thread(commands.Cog):
                 break
 
         if channel.category.id != cat_archive_id:
-            await ctx.send("You cannot use reopen command here.")
+            await ctx.send("ここでは reopen コマンドを使用できません。")
             return
 
         cat_thread = self.bot.get_channel(cat_thread_id)
@@ -214,7 +214,7 @@ class Thread(commands.Cog):
         await channel.edit(category=cat_thread)
         await channel.edit(sync_permissions=True)
         await ctx.send(
-            f"{ctx.author.mention} {channel.mention} is reopened from the archives."
+            f"{ctx.author.mention} {channel.mention} をアーカイブから戻しました。"
         )
 
     @commands.command()
@@ -226,7 +226,7 @@ class Thread(commands.Cog):
 
         # If the channel doesn't have a category, it is not Thread.
         if not channel.category:
-            await ctx.send("You cannot use rename command here.")
+            await ctx.send("ここでは rename コマンドを使用できません。")
             return
 
         # If in the Thread, bring the ThreadCategoryID.
@@ -238,18 +238,18 @@ class Thread(commands.Cog):
 
         # Check can use rename command.
         if not cat_thread_id:
-            await ctx.send("You cannot use rename command here.")
+            await ctx.send("ここでは rename コマンドを使用できません。")
             return
         elif not (
             channel.topic == f"thread-author: {ctx.author.id}"
             or ctx.author.guild_permissions.administrator
         ):
-            await ctx.send("You don't have permission to use rename command.")
+            await ctx.send("あなたはここで rename コマンドを使用する権限がありません")
             return
 
         # Rename Process
         await channel.edit(name=name)
-        await ctx.send(f"{ctx.author.mention} renamed `{name}`")
+        await ctx.send(f"{ctx.author.mention} チャンネル名を `{name}` に変更しました。")
 
     @commands.command()
     async def close(self, ctx):
@@ -260,7 +260,7 @@ class Thread(commands.Cog):
 
         # if not Thread or Thread Master, don't allow use it.
         if (not channel.category) or (str(channel.id) in self.threads):
-            await ctx.send("You cannot use close command here.")
+            await ctx.send("ここでは close コマンドを使用できません。")
             return
 
         # If in the Thread, bring some data.
@@ -273,20 +273,20 @@ class Thread(commands.Cog):
 
         # Check can use close command
         if not cat_thread_id:
-            await ctx.send("You cannot use close command here.")
+            await ctx.send("ここでは close コマンドを使用できません。")
             return
         elif not (
             channel.topic == f"thread-author: {ctx.author.id}"
             or ctx.author.guild_permissions.administrator
         ):
-            await ctx.send("You don't have permission to use close command.")
+            await ctx.send("あなたはここで close コマンドを使用する権限がありません")
             return
 
         # Close Process
         cat_archive = self.bot.get_channel(cat_archive_id)
         await channel.edit(category=cat_archive)
         await channel.edit(sync_permissions=True)
-        await ctx.send("This thread was closed.")
+        await ctx.send("このスレッドは閉じられました。")
 
 
 def setup(bot):
