@@ -3,7 +3,7 @@ from textwrap import dedent
 from discord.ext import commands
 
 
-class Help(commands.Cog, command_attrs=dict(hidden=True)):
+class Help(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -12,28 +12,25 @@ class Help(commands.Cog, command_attrs=dict(hidden=True)):
         await ctx.send(
             dedent(
                 """\
-            **Simple Thread** allows you to add threaded features to your guild.
+            # Simple Thread は Discord サーバーにスレッド機能を追加する bot です。
 
-            > `/set <ThreadMasterChannel> <ThreadCategory> <ArchiveCategory>`
-            Sets the Thread to your server.
+            # 使い方
+             `/set <ThreadMasterChannel> <ThreadCategory> <ArchiveCategory>`
+            スレッドを設定します。
 
-            > `/remove <ThreadMasterChannel>`
-            Removes the saved Thread features with the set command.
+            `<ThreadName>`
+            これを `<ThreadMasterChannel>` に送ると、Simple Thread が `<ThreadCategory>` の中に `<ThreadName>` という名前のチャンネルを作成します。
 
-            > `<ThreadName>`
-            When you send it to `<ThreadMasterChannel>`, Simple Thread creates a new channel named `<ThreadName>` in `<ThreadCategory>`.
-
-            > `/close`
-            When you send it to closed channel in `<ArchiveCategory>`, it is reopened.
+            `/close`
+            送信先のスレッドを `<ArchiveCategory>` にアーカイブします。
             
-            > `/rename <name>`
-            Renames the channel to `<ThreadName>` only if sent to your channel by you.
+            詳しい使い方は GitHub を読んでください。
+            
+            # GitHubはこちら
+            <https://github.com/tenzyu/simple-thread>
 
-            > `/close`
-            Archives the channel to `<ArchiveCategory>` only if sent to your channel by you.
-
-            See also GitHub for more information:
-            https://github.com/tenzyu/simple-thread
+            # サポートサーバーはこちら
+            <https://discord.gg/4nSKCE9RRn>
             """
             )
         )

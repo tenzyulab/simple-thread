@@ -42,7 +42,7 @@ Tips: `<ArchiveCategory>` に `<ThreadName>` という名前のチャンネル�
 
 ### `/close`
 
-スレッドを `<ArchiveCategory>` にアーカイブします。
+送信先のスレッドを `<ArchiveCategory>` にアーカイブします。
 
 Tips: サーバーの管理者であれば、無差別に閉じることができます。
 
@@ -73,7 +73,7 @@ Tips: サーバーの管理者であれば、無差別に閉じることがで�
 
 <br />
 
-<p align="center">©️ 2020 Tenzyu Masuda</p>
+<p align="center">©️ 2020 - 2021 Tenzyu Masuda</p>
 
 <br />
 
