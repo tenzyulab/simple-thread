@@ -14,7 +14,9 @@ class MyBot(commands.Bot):
         print("Starting Simple Thread...")
         self.remove_command("help")
 
-        for cog in [cog.replace("/", ".").replace(".py", "") for cog in glob("cogs/*.py")]:
+        for cog in [
+            cog.replace("/", ".").replace(".py", "") for cog in glob("cogs/*.py")
+        ]:
             try:
                 self.load_extension(cog)
                 print(f"loaded: {cog}")
@@ -32,6 +34,6 @@ class MyBot(commands.Bot):
         await ctx.send(error)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     bot = MyBot()
     bot.run(getenv("DISCORD_BOT_TOKEN"))

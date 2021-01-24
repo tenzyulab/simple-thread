@@ -9,7 +9,9 @@ class Help(commands.Cog, command_attrs=dict(hidden=True)):
 
     @commands.command()
     async def help(self, ctx):
-        await ctx.send(dedent("""\
+        await ctx.send(
+            dedent(
+                """\
             **Simple Thread** allows you to add threaded features to your guild.
 
             > `/set <ThreadMasterChannel> <ThreadCategory> <ArchiveCategory>`
@@ -32,7 +34,9 @@ class Help(commands.Cog, command_attrs=dict(hidden=True)):
 
             See also GitHub for more information:
             https://github.com/tenzyu/simple-thread
-            """))
+            """
+            )
+        )
 
 
 def setup(bot):

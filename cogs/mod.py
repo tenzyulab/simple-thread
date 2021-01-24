@@ -10,7 +10,7 @@ class Mod(commands.Cog, command_attrs=dict(hidden=True)):
             await ctx.send("You don't have permission.")
             return False
         return True
-    
+
     @commands.command(name="load")
     async def owner_load(self, ctx, cog):
         self.bot.load_extension("cogs." + cog)
